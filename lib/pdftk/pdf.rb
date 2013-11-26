@@ -16,10 +16,10 @@ module Pdftk
       fields_with_values.each {|field| field.value = nil }
     end
 
-    def export output_pdf_path, extra_params
+    def export output_pdf_path, extra_params=""
       xfdf_path = Tempfile.new('pdftk-xfdf').path
       File.open(xfdf_path, 'w'){|f| f << xfdf }
-      system %{pdftk "#{path}" fill_form "#{xfdf_path}" output "#{output_pdf_path}" "#{extra_params}"}
+      system %{pdftk "#{path}" fill_form "#{xfdf_path}" output "#{output_pdf_path}" #{extra_params}}
     end
 
     def xfdf
