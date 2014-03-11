@@ -2,7 +2,8 @@ GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.2)
-    haml (3.0.18)
+    haml (4.0.5)
+      tilt
     rspec (2.0.0.beta.22)
       rspec-core (= 2.0.0.beta.22)
       rspec-expectations (= 2.0.0.beta.22)
@@ -13,10 +14,11 @@ GEM
     rspec-mocks (2.0.0.beta.22)
       rspec-core (= 2.0.0.beta.22)
       rspec-expectations (= 2.0.0.beta.22)
+    tilt (2.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   haml
-  rspec (= 2.0.0.beta.22)
+  rspec

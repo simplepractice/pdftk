@@ -24,10 +24,12 @@ module Pdftk
 
     def xfdf
       @fields = fields_with_values
-
       if @fields.any?
         haml_view_path = File.join File.dirname(__FILE__), 'xfdf.haml'
-        Haml::Engine.new(File.read(haml_view_path)).render(self)
+        eng = Haml::Engine.new(File.read(haml_view_path))
+        eng.options.format = :xhtml
+        eng.options.mime_type = 'text/xml'
+        eng.render(self).to_s
       end
     end
 

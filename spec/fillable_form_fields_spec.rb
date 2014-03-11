@@ -61,6 +61,7 @@ describe Pdftk::PDF do
 
       @pdf.fields[0].value = 'My Name'
       @pdf.xfdf.should_not be_nil
+      puts  @pdf.xfdf.to_s
       @pdf.xfdf.should == "<?xml version='1.0' encoding='utf-8' ?>\n<xfdf xml:space='preserve' xmlns='http://ns.adobe.com/xfdf/'>\n  <fields>\n    <field name='First name'>\n      <value>My Name</value>\n    </field>\n  </fields>\n</xfdf>\n"
     end
 
