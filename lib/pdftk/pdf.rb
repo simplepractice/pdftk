@@ -8,6 +8,13 @@ module Pdftk
       @path = path
     end
 
+    def map_name name
+      unless @_fields_mapping
+        fields
+      end
+      @_fields_mapping[name]
+    end
+    
     def fields_with_values
       fields.reject {|field| field.value.nil? or field.value.empty? }
     end
@@ -44,6 +51,7 @@ module Pdftk
           end
           Field.new(attributes)
         end
+        @_fields_mapping = Hash[@_all_fields.each_with_index.map{|field, index| [field.name,index]}]
       end
       @_all_fields
     end
