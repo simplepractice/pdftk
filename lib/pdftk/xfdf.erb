@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<xfdf xml:space='preserve' xmlns='http://ns.adobe.com/xfdf/'>
+  <fields>
+    <% fields.each do |field| %>
+    <field name='<%= field.name %>'>
+      <value><%= field.value %></value>
+    </field>
+    <% end %>
+  </fields>
+</xfdf>

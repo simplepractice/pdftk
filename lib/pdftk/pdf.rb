@@ -2,6 +2,8 @@ module Pdftk
 
   # Represents a PDF
   class PDF
+    TEMPLATE = File.read(File.join(File.dirname(__FILE__), 'xfdf.erb'))
+
     attr_accessor :path
 
     def initialize path
@@ -14,7 +16,7 @@ module Pdftk
       end
       @_fields_mapping[name]
     end
-    
+
     def fields_with_values
       fields.reject {|field| field.value.nil? or field.value.empty? }
     end
@@ -30,13 +32,10 @@ module Pdftk
     end
 
     def xfdf
-      @fields = fields_with_values
-      if @fields.any?
-        haml_view_path = File.join File.dirname(__FILE__), 'xfdf.haml'
-        eng = Haml::Engine.new(File.read(haml_view_path))
-        eng.options.format = :xhtml
-        eng.options.mime_type = 'text/xml'
-        eng.render(self).to_s
+      fields = fields_with_values
+      if fields.any?
+        eng = ERB.new(TEMPLATE)
+        eng.result_with_hash(fields: fields)
       end
     end
 
