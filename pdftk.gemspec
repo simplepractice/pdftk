@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.email       = 'remi@remitaylor.com'
   s.homepage    = 'http://github.com/remi/pdftk'
 
-  s.add_dependency 'haml'
+  s.add_dependency 'erb'
 end
