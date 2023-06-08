@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pdftk (0.1.0)
+    pdftk (1.0.0)
       activesupport
       erb
       subprocess
