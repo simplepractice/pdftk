@@ -1,8 +1,6 @@
 source "https://rubygems.org"
+gemspec
 
+gem "rspec"
+gem "pry"
 gem "standard"
-
-group :test do
-  gem "rspec"
-  gem "activesupport"
-end

@@ -9,4 +9,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/remi/pdftk"
 
   s.add_dependency "erb"
+  s.add_dependency "activesupport"
+  s.add_dependency "subprocess"
 end
