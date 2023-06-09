@@ -58,7 +58,7 @@ module Pdftk
 
     def run_cmd(*cmd)
       stderr = nil
-      Subprocess.check_output(["pdftk", *cmd.compact_blank], stderr: Subprocess::PIPE) do |process|
+      Subprocess.check_output(["pdftk", *cmd.compact_blank.map(&:to_s)], stderr: Subprocess::PIPE) do |process|
         stderr = process.stderr.read
       end
     rescue Subprocess::NonZeroExit => err
