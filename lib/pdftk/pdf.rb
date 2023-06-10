@@ -49,7 +49,7 @@ module Pdftk
           end
           Field.new(attributes)
         end
-        @_fields_mapping = @_all_fields.each_with_index.map { |field, index| [field.name, index] }.to_h
+        @_fields_mapping = @_all_fields.each_with_index.to_h { |field, index| [field.name, index] }
       end
       @_all_fields
     end
