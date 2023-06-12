@@ -1,8 +1,7 @@
 module Pdftk
-
   # Represents a PDF
   class PDF
-    TEMPLATE = File.read(File.join(File.dirname(__FILE__), 'xfdf.erb'))
+    TEMPLATE = File.read(File.join(File.dirname(__FILE__), "xfdf.erb"))
 
     attr_accessor :path
 
@@ -18,17 +17,17 @@ module Pdftk
     end
 
     def fields_with_values
-      fields.reject {|field| field.value.nil? or field.value.empty? }
+      fields.reject { |field| field.value.nil? or field.value.empty? }
     end
 
     def clear_values
-      fields_with_values.each {|field| field.value = nil }
+      fields_with_values.each { |field| field.value = nil }
     end
 
-    def export output_pdf_path, extra_params=""
-      xfdf_path = Tempfile.new('pdftk-xfdf').path
-      File.open(xfdf_path, 'w'){|f| f << xfdf }
-      system %{pdftk "#{path}" fill_form "#{xfdf_path}" output "#{output_pdf_path}" #{extra_params}}
+    def export output_pdf_path, extra_params = ""
+      xfdf_path = Tempfile.new("pdftk-xfdf").path
+      File.open(xfdf_path, "w") { |f| f << xfdf }
+      run_cmd path, "fill_form", xfdf_path, "output", output_pdf_path, extra_params
     end
 
     def xfdf
@@ -41,8 +40,8 @@ module Pdftk
 
     def fields
       unless @_all_fields
-        field_output = `pdftk "#{path}" dump_data_fields`
-        raw_fields   = field_output.split(/^---\n/).reject {|text| text.empty? }
+        field_output = run_cmd path, "dump_data_fields"
+        raw_fields = field_output.split(/^---\n/).reject { |text| text.empty? }
         @_all_fields = raw_fields.map do |field_text|
           attributes = {}
           field_text.scan(/^(\w+): (.*)$/) do |key, value|
@@ -50,10 +49,20 @@ module Pdftk
           end
           Field.new(attributes)
         end
-        @_fields_mapping = Hash[@_all_fields.each_with_index.map{|field, index| [field.name,index]}]
+        @_fields_mapping = @_all_fields.each_with_index.to_h { |field, index| [field.name, index] }
       end
       @_all_fields
     end
-  end
 
+    private
+
+    def run_cmd(*cmd)
+      stderr = nil
+      Subprocess.check_output(["pdftk", *cmd.compact_blank.map(&:to_s)], stderr: Subprocess::PIPE) do |process|
+        stderr = process.stderr.read
+      end
+    rescue Subprocess::NonZeroExit => err
+      raise Error, "#{err.message}\n\n#{stderr}"
+    end
+  end
 end

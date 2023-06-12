@@ -1,11 +1,13 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
+require "active_support"
+require "active_support/core_ext/enumerable"
+require "erb"
+require "subprocess"
+require "tempfile"
 
-require 'tempfile'
-require 'rubygems'
-require 'haml'
+require "pdftk/pdf"
+require "pdftk/field"
 
 module Pdftk
+  class Error < StandardError
+  end
 end
-
-require 'pdftk/pdf'
-require 'pdftk/field'

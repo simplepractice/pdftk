@@ -1,8 +1,6 @@
 module Pdftk
-
   # Represents a fillable form field on a particular PDF
   class Field
-
     def self.alias_attribute method_name, attribute_name
       define_method(method_name) do
         attributes[attribute_name]
@@ -18,9 +16,8 @@ module Pdftk
       @attributes = attributes
     end
 
-    alias_attribute :name,  'FieldName'
-    alias_attribute :type,  'FieldType'
-    alias_attribute :value, 'FieldValue'
+    alias_attribute :name, "FieldName"
+    alias_attribute :type, "FieldType"
+    alias_attribute :value, "FieldValue"
   end
-
 end

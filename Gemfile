@@ -1,7 +1,6 @@
-source :rubygems
+source "https://rubygems.org"
+gemspec
 
-gem 'haml'
-
-group :test do
-  gem 'rspec'
-end
+gem "rspec"
+gem "pry"
+gem "standard"
