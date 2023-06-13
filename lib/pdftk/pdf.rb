@@ -25,9 +25,12 @@ module Pdftk
     end
 
     def export output_pdf_path, extra_params = ""
-      xfdf_path = Tempfile.new("pdftk-xfdf").path
-      File.open(xfdf_path, "w") { |f| f << xfdf }
-      run_cmd path, "fill_form", xfdf_path, "output", output_pdf_path, extra_params
+      Tempfile.create("pdftk-xfdf") do |file|
+        file.write(xfdf)
+        file.close
+
+        run_cmd path, "fill_form", file.path, "output", output_pdf_path, extra_params
+      end
     end
 
     def xfdf
