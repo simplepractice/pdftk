@@ -3,7 +3,7 @@
   <fields>
     <% fields.each do |field| %>
     <field name='<%= field.name %>'>
-      <value><%= field.value %></value>
+      <value><%= ERB::Util.html_escape(field.value) %></value>
     </field>
     <% end %>
   </fields>

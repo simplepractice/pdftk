@@ -67,6 +67,7 @@ describe Pdftk::PDF do
       expect(pdf.xfdf).to be_nil
 
       pdf.fields[0].value = "My Name"
+      pdf.fields[1].value = "<lol&wat'>"
       expect(pdf.xfdf).to_not be_nil
       expect(pdf.xfdf.squish).to eq(<<~XML.squish)
         <?xml version='1.0' encoding='utf-8' ?>
@@ -75,6 +76,10 @@ describe Pdftk::PDF do
 
             <field name='First name'>
               <value>My Name</value>
+            </field>
+
+            <field name='Middle name'>
+              <value>&lt;lol&amp;wat&#39;&gt;</value>
             </field>
 
           </fields>
