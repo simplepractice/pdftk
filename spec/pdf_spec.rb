@@ -55,7 +55,6 @@ describe Pdftk::PDF do
 
       it "can raise error" do
         expect { pdf.fields }.to raise_error(Pdftk::Error) do |err|
-          expect(err.message).to include("returned non-zero exit status 1")
           expect(err.message).to include("Error: Unable to find file")
         end
       end

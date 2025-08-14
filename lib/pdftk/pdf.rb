@@ -60,12 +60,14 @@ module Pdftk
     private
 
     def run_cmd(*cmd)
-      stderr = nil
-      Subprocess.check_output(["pdftk", *cmd.compact_blank.map(&:to_s)], stderr: Subprocess::PIPE) do |process|
-        stderr = process.stderr.read
+      full_cmd = ["pdftk", *cmd.compact_blank.map(&:to_s)]
+      stdout, stderr, status = Open3.capture3(*full_cmd)
+      if status.success?
+        stdout
+      else
+        raise Error, "Command #{full_cmd.join(" ")} returned non-zero exit status #{status.exitstatus}" \
+                     "\n\n#{stderr.strip}"
       end
-    rescue Subprocess::NonZeroExit => err
-      raise Error, "#{err.message}\n\n#{stderr}"
     end
   end
 end

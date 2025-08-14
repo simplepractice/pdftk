@@ -1,7 +1,7 @@
 require "active_support"
 require "active_support/core_ext/enumerable"
 require "erb"
-require "subprocess"
+require "open3"
 require "tempfile"
 
 require "pdftk/pdf"

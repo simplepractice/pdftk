@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "erb"
   s.add_dependency "activesupport"
-  s.add_dependency "subprocess"
+  s.add_dependency "open3"
 end
